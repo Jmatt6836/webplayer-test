@@ -24,7 +24,10 @@ You will need to register your app and get your own credentials from the
 To do so, go to your Spotify for Developers Dashboard, create your
 application and register the following callback URI:
 
-`http://localhost:3000/auth/callback`
+`http://127.0.0.1:3000/auth/callback`
+
+(Use `127.0.0.1`, not `localhost`: Spotify no longer accepts `localhost`
+redirect URIs.)
 
 Once you have created your app, create a file called `.env` in the root folder
 of the repository with your Spotify credentials:
@@ -35,7 +38,7 @@ SPOTIFY_CLIENT_SECRET='my_client_secret'
 ```
 
 Optional overrides: `PORT` (auth server port, default `8080`) and
-`SPOTIFY_REDIRECT_URI` (default `http://localhost:3000/auth/callback`).
+`SPOTIFY_REDIRECT_URI` (default `http://127.0.0.1:3000/auth/callback`).
 
 ## Installation
 
@@ -57,7 +60,7 @@ Start both client and server with the following command:
 npm run dev
 ```
 
-The React application will start on `http://localhost:3000`
+The React application will start on `http://127.0.0.1:3000`
 
 Run the tests with `npm test`.
 
