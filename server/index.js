@@ -22,6 +22,9 @@
  *   shuffle/repeat.
  * - Port and redirect URI can be overridden with env vars instead of being
  *   hard-coded.
+ * - The default redirect URI uses 127.0.0.1 instead of localhost. Spotify
+ *   stopped accepting `localhost` redirect URIs in 2025, and only allows
+ *   loopback IP addresses for http:// URIs.
  */
 const express = require('express');
 const crypto = require('crypto');
@@ -33,7 +36,8 @@ const port = process.env.PORT || 8080;
 
 const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
 const spotifyClientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-const spotifyRedirectUri = process.env.SPOTIFY_REDIRECT_URI || 'http://localhost:3000/auth/callback';
+// CHANGED: 127.0.0.1, not localhost, because Spotify rejects localhost redirect URIs.
+const spotifyRedirectUri = process.env.SPOTIFY_REDIRECT_URI || 'http://127.0.0.1:3000/auth/callback';
 
 // CHANGED: fail fast with a clear message instead of a confusing Spotify
 // error page later on.
@@ -153,5 +157,5 @@ app.post('/auth/logout', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
+  console.log(`Auth server listening at http://127.0.0.1:${port}`);
 });
